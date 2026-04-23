@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ML Encyclopedia — Deep Learning & AI Reference</title>
+  <link rel="stylesheet" href="css/main.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Fraunces:ital,wght@0,300;0,600;0,900;1,300;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+    };
+  </script>
+</head>
+<body>
+  <div class="grain"></div>
+
+  <!-- SIDEBAR NAV -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-bracket">{</span>
+      <span class="logo-text">ML<br/>ENC.</span>
+      <span class="logo-bracket">}</span>
+    </div>
+    <div class="nav-section-label">FOUNDATIONS</div>
+    <a href="#section-types" class="nav-link" data-section="types">ML Types</a>
+    <a href="#section-linear" class="nav-link" data-section="linear">Linear Models</a>
+    <a href="#section-activation" class="nav-link" data-section="activation">Activations</a>
+    <a href="#section-ffnn" class="nav-link" data-section="ffnn">Feed-Forward NN</a>
+
+    <div class="nav-section-label">SEQUENCE MODELS</div>
+    <a href="#section-rnn" class="nav-link" data-section="rnn">RNN</a>
+    <a href="#section-lstm" class="nav-link" data-section="lstm">LSTM</a>
+    <a href="#section-gru" class="nav-link" data-section="gru">GRU</a>
+
+    <div class="nav-section-label">ATTENTION ERA</div>
+    <a href="#section-attention" class="nav-link" data-section="attention">Attention</a>
+    <a href="#section-transformer" class="nav-link" data-section="transformer">Transformer</a>
+    <a href="#section-embedding" class="nav-link" data-section="embedding">Embeddings</a>
+
+    <div class="nav-section-label">TRAINING</div>
+    <a href="#section-loss" class="nav-link" data-section="loss">Loss Functions</a>
+    <a href="#section-optimizers" class="nav-link" data-section="optimizers">Optimizers</a>
+    <a href="#section-regularization" class="nav-link" data-section="regularization">Regularization</a>
+    <a href="#section-backprop" class="nav-link" data-section="backprop">Backpropagation</a>
+
+    <div class="nav-section-label">ADVANCED</div>
+    <a href="#section-cnn" class="nav-link" data-section="cnn">CNN</a>
+    <a href="#section-gan" class="nav-link" data-section="gan">GAN</a>
+    <a href="#section-vae" class="nav-link" data-section="vae">VAE</a>
+    <a href="#section-rl" class="nav-link" data-section="rl">Reinforcement Learning</a>
+
+    <div class="nav-section-label">INTERVIEW PREP</div>
+    <a href="#section-interview" class="nav-link" data-section="interview">Interview Q&A</a>
+    <a href="#section-sysdesign" class="nav-link" data-section="sysdesign">ML System Design</a>
+  </nav>
+
+  <!-- HAMBURGER -->
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-tag">// COMPREHENSIVE REFERENCE</div>
+      <h1 class="hero-title">Machine Learning<br/><em>Encyclopedia</em></h1>
+      <p class="hero-sub">Mathematical foundations · Model architectures · Training dynamics · Interview mastery · System design</p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">40+</span><span class="stat-label">Topics</span></div>
+        <div class="stat"><span class="stat-num">100+</span><span class="stat-label">Equations</span></div>
+        <div class="stat"><span class="stat-num">60+</span><span class="stat-label">Interview Q&A</span></div>
+      </div>
+    </section>
+
+    <!-- ML TYPES -->
+    <section class="content-section" id="section-types">
+      <div class="section-header">
+        <span class="section-tag">01</span>
+        <h2>Types of Machine Learning</h2>
+      </div>
+      <div class="card-grid-3">
+        <div class="card card-accent-green">
+          <div class="card-icon">👁️</div>
+          <h3>Supervised Learning</h3>
+          <p>Learn a mapping $f: X \to Y$ from labeled pairs $(x_i, y_i)$. Minimize empirical risk:</p>
+          <div class="math-block">$$\hat{f} = \arg\min_f \frac{1}{n}\sum_{i=1}^n \mathcal{L}(f(x_i), y_i)$$</div>
+          <div class="tag-list">
+            <span class="tag">Classification</span>
+            <span class="tag">Regression</span>
+            <span class="tag">Object Detection</span>
+          </div>
+        </div>
+        <div class="card card-accent-blue">
+          <div class="card-icon">🔍</div>
+          <h3>Unsupervised Learning</h3>
+          <p>Discover structure in unlabeled data $\{x_i\}$. Learn the data distribution $p(x)$:</p>
+          <div class="math-block">$$\max_\theta \sum_{i=1}^n \log p_\theta(x_i)$$</div>
+          <div class="tag-list">
+            <span class="tag">Clustering</span>
+            <span class="tag">Density Estimation</span>
+            <span class="tag">Dimensionality Reduction</span>
+          </div>
+        </div>
+        <div class="card card-accent-orange">
+          <div class="card-icon">🎮</div>
+          <h3>Reinforcement Learning</h3>
+          <p>Agent learns policy $\pi$ by maximizing expected cumulative reward:</p>
+          <div class="math-block">$$J(\pi) = \mathbb{E}_{\tau \sim \pi}\left[\sum_{t=0}^T \gamma^t r_t\right]$$</div>
+          <div class="tag-list">
+            <span class="tag">Policy Gradient</span>
+            <span class="tag">Q-Learning</span>
+            <span class="tag">Actor-Critic</span>
+          </div>
+        </div>
+        <div class="card card-accent-purple">
+          <div class="card-icon">🤝</div>
+          <h3>Semi-Supervised</h3>
+          <p>Combines small labeled set $\mathcal{L}$ and large unlabeled set $\mathcal{U}$:</p>
+          <div class="math-block">$$\mathcal{L}_{total} = \mathcal{L}_{sup} + \lambda \mathcal{L}_{unsup}$$</div>
+          <div class="tag-list">
+            <span class="tag">Self-Training</span>
+            <span class="tag">Pseudo-Labels</span>
+            <span class="tag">Consistency Reg.</span>
+          </div>
+        </div>
+        <div class="card card-accent-red">
+          <div class="card-icon">🧠</div>
+          <h3>Self-Supervised</h3>
+          <p>Create supervision from data itself using pretext tasks. Contrastive loss:</p>
+          <div class="math-block">$$\mathcal{L} = -\log\frac{e^{s(z_i,z_j^+)/\tau}}{\sum_k e^{s(z_i,z_k)/\tau}}$$</div>
+          <div class="tag-list">
+            <span class="tag">SimCLR</span>
+            <span class="tag">BERT MLM</span>
+            <span class="tag">MAE</span>
+          </div>
+        </div>
+        <div class="card card-accent-teal">
+          <div class="card-icon">🔄</div>
+          <h3>Transfer Learning</h3>
+          <p>Adapt model trained on source $\mathcal{D}_S$ to target $\mathcal{D}_T$. Fine-tune with low LR:</p>
+          <div class="math-block">$$\theta_T = \theta_S - \eta \nabla_\theta \mathcal{L}_T(\theta_S)$$</div>
+          <div class="tag-list">
+            <span class="tag">Fine-tuning</span>
+            <span class="tag">LoRA</span>
+            <span class="tag">Domain Adaptation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LINEAR MODELS -->
+    <section class="content-section" id="section-linear">
+      <div class="section-header">
+        <span class="section-tag">02</span>
+        <h2>Linear Models</h2>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <h3>Linear Regression</h3>
+          <p>Model: $\hat{y} = \mathbf{w}^T\mathbf{x} + b$</p>
+          <p>Closed-form (Normal Equation):</p>
+          <div class="math-block">$$\mathbf{w}^* = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$$</div>
+          <p>Geometric interpretation: project $\mathbf{y}$ onto column space of $\mathbf{X}$.</p>
+          <div class="code-block"><span class="code-comment"># Gradient: ∂MSE/∂w = -2X^T(y - Xw)/n</span>
+w = np.linalg.inv(X.T @ X) @ X.T @ y</div>
+        </div>
+        <div class="card">
+          <h3>Logistic Regression</h3>
+          <p>Sigmoid squashes logit to probability:</p>
+          <div class="math-block">$$\sigma(z) = \frac{1}{1+e^{-z}}, \quad \hat{p} = \sigma(\mathbf{w}^T\mathbf{x}+b)$$</div>
+          <p>Log-likelihood (cross-entropy):</p>
+          <div class="math-block">$$\mathcal{L} = -\frac{1}{n}\sum_i[y_i \log\hat{p}_i + (1-y_i)\log(1-\hat{p}_i)]$$</div>
+          <div class="insight-box">💡 Decision boundary is linear in feature space: $\mathbf{w}^T\mathbf{x}+b=0$</div>
+        </div>
+      </div>
+      <div class="card mt-4">
+        <h3>Support Vector Machine (SVM)</h3>
+        <p>Find maximum-margin hyperplane. Primal form:</p>
+        <div class="math-block">$$\min_{\mathbf{w},b} \frac{1}{2}\|\mathbf{w}\|^2 \quad \text{s.t.} \quad y_i(\mathbf{w}^T\mathbf{x}_i+b) \geq 1$$</div>
+        <p>Dual (kernel trick enabled):</p>
+        <div class="math-block">$$\max_\alpha \sum_i \alpha_i - \frac{1}{2}\sum_{i,j}\alpha_i\alpha_j y_i y_j K(\mathbf{x}_i,\mathbf{x}_j)$$</div>
+        <p>RBF Kernel: $K(\mathbf{x},\mathbf{x}') = \exp\!\left(-\gamma\|\mathbf{x}-\mathbf{x}'\|^2\right)$</p>
+      </div>
+    </section>
+
+    <!-- ACTIVATIONS -->
+    <section class="content-section" id="section-activation">
+      <div class="section-header">
+        <span class="section-tag">03</span>
+        <h2>Activation Functions</h2>
+      </div>
+      <div class="activation-grid">
+        <div class="activation-card">
+          <div class="act-name">Sigmoid</div>
+          <div class="math-block">$$\sigma(x)=\frac{1}{1+e^{-x}}$$</div>
+          <div class="act-chart" id="chart-sigmoid"></div>
+          <p class="act-deriv">$\sigma'(x) = \sigma(x)(1-\sigma(x))$</p>
+          <div class="pros-cons">
+            <span class="pro">✓ Probabilistic output</span>
+            <span class="con">✗ Vanishing gradient</span>
+          </div>
+        </div>
+        <div class="activation-card">
+          <div class="act-name">Tanh</div>
+          <div class="math-block">$$\tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}$$</div>
+          <div class="act-chart" id="chart-tanh"></div>
+          <p class="act-deriv">$\tanh'(x) = 1 - \tanh^2(x)$</p>
+          <div class="pros-cons">
+            <span class="pro">✓ Zero-centered</span>
+            <span class="con">✗ Still saturates</span>
+          </div>
+        </div>
+        <div class="activation-card">
+          <div class="act-name">ReLU</div>
+          <div class="math-block">$$\text{ReLU}(x)=\max(0,x)$$</div>
+          <div class="act-chart" id="chart-relu"></div>
+          <p class="act-deriv">$f'(x) = \mathbb{1}[x > 0]$</p>
+          <div class="pros-cons">
+            <span class="pro">✓ No vanishing gradient</span>
+            <span class="con">✗ Dying ReLU</span>
+          </div>
+        </div>
+        <div class="activation-card">
+          <div class="act-name">GELU</div>
+          <div class="math-block">$$\text{GELU}(x)=x\,\Phi(x)$$</div>
+          <div class="act-chart" id="chart-gelu"></div>
+          <p class="act-deriv">$\Phi$: standard normal CDF</p>
+          <div class="pros-cons">
+            <span class="pro">✓ Used in Transformers</span>
+            <span class="con">✗ Computationally expensive</span>
+          </div>
+        </div>
+        <div class="activation-card">
+          <div class="act-name">Leaky ReLU</div>
+          <div class="math-block">$$f(x) = \begin{cases} x & x>0 \\ \alpha x & x\leq 0\end{cases}$$</div>
+          <div class="act-chart" id="chart-lrelu"></div>
+          <p class="act-deriv">$\alpha$ typically $0.01$</p>
+          <div class="pros-cons">
+            <span class="pro">✓ Fixes dying ReLU</span>
+            <span class="con">✗ Not always better</span>
+          </div>
+        </div>
+        <div class="activation-card">
+          <div class="act-name">Softmax</div>
+          <div class="math-block">$$\text{softmax}(z_i)=\frac{e^{z_i}}{\sum_j e^{z_j}}$$</div>
+          <div class="act-chart" id="chart-softmax"></div>
+          <p class="act-deriv">Outputs sum to 1; for multi-class</p>
+          <div class="pros-cons">
+            <span class="pro">✓ Probability distribution</span>
+            <span class="con">✗ Not for hidden layers</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEED-FORWARD NN -->
+    <section class="content-section" id="section-ffnn">
+      <div class="section-header">
+        <span class="section-tag">04</span>
+        <h2>Feed-Forward Neural Network</h2>
+      </div>
+      <div class="two-col">
+        <div>
+          <div class="card">
+            <h3>Forward Pass</h3>
+            <p>Layer $l$ computation:</p>
+            <div class="math-block">$$\mathbf{z}^{(l)} = \mathbf{W}^{(l)}\mathbf{a}^{(l-1)} + \mathbf{b}^{(l)}$$</div>
+            <div class="math-block">$$\mathbf{a}^{(l)} = \phi\!\left(\mathbf{z}^{(l)}\right)$$</div>
+            <p>where $\phi$ is a non-linear activation. Stack $L$ layers:</p>
+            <div class="math-block">$$f(\mathbf{x}) = \mathbf{W}^{(L)}\phi(\mathbf{W}^{(L-1)}\cdots\phi(\mathbf{W}^{(1)}\mathbf{x}+\mathbf{b}^{(1)})\cdots)$$</div>
+          </div>
+          <div class="card mt-4">
+            <h3>Universal Approximation Theorem</h3>
+            <div class="insight-box">A 1-hidden-layer network with enough neurons can approximate any continuous function on a compact set to arbitrary precision.</div>
+            <p>Formally, $\forall \epsilon > 0$, $\exists$ network $f_\theta$ s.t. $\sup_{x \in K} |f(x) - f_\theta(x)| < \epsilon$</p>
+          </div>
+        </div>
+        <div>
+          <div class="ffnn-diagram" id="ffnn-diagram">
+            <canvas id="ffnn-canvas" width="340" height="320"></canvas>
+          </div>
+          <div class="card mt-4">
+            <h3>Parameter Count</h3>
+            <p>For layers of sizes $[n_0, n_1, \ldots, n_L]$:</p>
+            <div class="math-block">$$\text{params} = \sum_{l=1}^L (n_{l-1} \cdot n_l + n_l)$$</div>
+            <div class="code-block">layer_sizes = [784, 256, 128, 10]
+params = sum(l1*l2+l2 for l1,l2
+  in zip(layer_sizes, layer_sizes[1:]))
+# = 784*256+256 + 256*128+128 + 128*10+10
+# = 234,506 parameters</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RNN -->
+    <section class="content-section" id="section-rnn">
+      <div class="section-header">
+        <span class="section-tag">05</span>
+        <h2>Recurrent Neural Network (RNN)</h2>
+      </div>
+      <div class="card">
+        <h3>Core Equations</h3>
+        <div class="two-col">
+          <div>
+            <p>Hidden state update at time $t$:</p>
+            <div class="math-block">$$\mathbf{h}_t = \tanh(\mathbf{W}_{hh}\mathbf{h}_{t-1} + \mathbf{W}_{xh}\mathbf{x}_t + \mathbf{b}_h)$$</div>
+            <p>Output:</p>
+            <div class="math-block">$$\mathbf{y}_t = \mathbf{W}_{hy}\mathbf{h}_t + \mathbf{b}_y$$</div>
+            <div class="insight-box">⚠️ Suffers from vanishing/exploding gradients over long sequences. Gradient scales as $\prod_{t} \partial \mathbf{h}_t/\partial \mathbf{h}_{t-1}$.</div>
+          </div>
+          <div>
+            <h4>BPTT (Backpropagation Through Time)</h4>
+            <div class="math-block">$$\frac{\partial \mathcal{L}}{\partial \mathbf{W}} = \sum_t \frac{\partial \mathcal{L}_t}{\partial \mathbf{W}}$$</div>
+            <div class="math-block">$$\frac{\partial \mathcal{L}_t}{\partial \mathbf{W}} = \sum_{k=1}^t \frac{\partial \mathcal{L}_t}{\partial \mathbf{y}_t}\frac{\partial \mathbf{y}_t}{\partial \mathbf{h}_t}\left(\prod_{j=k}^{t-1}\frac{\partial \mathbf{h}_{j+1}}{\partial \mathbf{h}_j}\right)\frac{\partial \mathbf{h}_k}{\partial \mathbf{W}}$$</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LSTM -->
+    <section class="content-section" id="section-lstm">
+      <div class="section-header">
+        <span class="section-tag">06</span>
+        <h2>Long Short-Term Memory (LSTM)</h2>
+      </div>
+      <div class="lstm-diagram-wrapper">
+        <canvas id="lstm-canvas" width="700" height="280"></canvas>
+      </div>
+      <div class="card-grid-2">
+        <div class="card gate-card gate-forget">
+          <div class="gate-label">🚪 Forget Gate</div>
+          <div class="math-block">$$\mathbf{f}_t = \sigma(\mathbf{W}_f[\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_f)$$</div>
+          <p>Decides what to discard from cell state. Output in $[0,1]$.</p>
+        </div>
+        <div class="card gate-card gate-input">
+          <div class="gate-label">➕ Input Gate</div>
+          <div class="math-block">$$\mathbf{i}_t = \sigma(\mathbf{W}_i[\mathbf{h}_{t-1},\mathbf{x}_t]+\mathbf{b}_i)$$</div>
+          <div class="math-block">$$\tilde{\mathbf{C}}_t = \tanh(\mathbf{W}_C[\mathbf{h}_{t-1},\mathbf{x}_t]+\mathbf{b}_C)$$</div>
+        </div>
+        <div class="card gate-card gate-cell">
+          <div class="gate-label">🔋 Cell State Update</div>
+          <div class="math-block">$$\mathbf{C}_t = \mathbf{f}_t \odot \mathbf{C}_{t-1} + \mathbf{i}_t \odot \tilde{\mathbf{C}}_t$$</div>
+          <p>Element-wise operations preserve gradients through time — the "highway" for gradients.</p>
+        </div>
+        <div class="card gate-card gate-output">
+          <div class="gate-label">📤 Output Gate</div>
+          <div class="math-block">$$\mathbf{o}_t = \sigma(\mathbf{W}_o[\mathbf{h}_{t-1},\mathbf{x}_t]+\mathbf{b}_o)$$</div>
+          <div class="math-block">$$\mathbf{h}_t = \mathbf{o}_t \odot \tanh(\mathbf{C}_t)$$</div>
+        </div>
+      </div>
+      <div class="card mt-4">
+        <h3>Why LSTM Solves Vanishing Gradient</h3>
+        <p>The cell state update $\mathbf{C}_t = \mathbf{f}_t \odot \mathbf{C}_{t-1} + \mathbf{i}_t \odot \tilde{\mathbf{C}}_t$ creates an additive shortcut. Gradient flows through this path without repeated matrix multiplication:</p>
+        <div class="math-block">$$\frac{\partial \mathbf{C}_t}{\partial \mathbf{C}_{t-1}} = \mathbf{f}_t \quad \text{(element-wise, no matrix multiply)}$$</div>
+      </div>
+    </section>
+
+    <!-- GRU -->
+    <section class="content-section" id="section-gru">
+      <div class="section-header">
+        <span class="section-tag">07</span>
+        <h2>Gated Recurrent Unit (GRU)</h2>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <h3>GRU Equations (Cho et al., 2014)</h3>
+          <p><strong>Reset gate</strong> — how much past to forget:</p>
+          <div class="math-block">$$\mathbf{r}_t = \sigma(\mathbf{W}_r[\mathbf{h}_{t-1}, \mathbf{x}_t])$$</div>
+          <p><strong>Update gate</strong> — interpolation coefficient:</p>
+          <div class="math-block">$$\mathbf{z}_t = \sigma(\mathbf{W}_z[\mathbf{h}_{t-1}, \mathbf{x}_t])$$</div>
+          <p><strong>Candidate hidden state:</strong></p>
+          <div class="math-block">$$\tilde{\mathbf{h}}_t = \tanh(\mathbf{W}[\mathbf{r}_t\odot\mathbf{h}_{t-1}, \mathbf{x}_t])$$</div>
+          <p><strong>Final hidden state:</strong></p>
+          <div class="math-block">$$\mathbf{h}_t = (1-\mathbf{z}_t)\odot\mathbf{h}_{t-1} + \mathbf{z}_t\odot\tilde{\mathbf{h}}_t$$</div>
+        </div>
+        <div class="card">
+          <h3>LSTM vs GRU Comparison</h3>
+          <table class="compare-table">
+            <tr><th>Property</th><th>LSTM</th><th>GRU</th></tr>
+            <tr><td>Gates</td><td>3 (f, i, o)</td><td>2 (r, z)</td></tr>
+            <tr><td>States</td><td>$\mathbf{h}_t, \mathbf{C}_t$</td><td>$\mathbf{h}_t$ only</td></tr>
+            <tr><td>Parameters</td><td>$4(n_h^2 + n_h n_x)$</td><td>$3(n_h^2 + n_h n_x)$</td></tr>
+            <tr><td>Performance</td><td>Slightly better on long sequences</td><td>Faster, similar accuracy</td></tr>
+            <tr><td>Interpretability</td><td>Cell state explicit</td><td>Simpler structure</td></tr>
+          </table>
+          <div class="insight-box">💡 GRU merges forget and input into a single update gate. If $\mathbf{z}_t \approx 0$, keep old state; if $\mathbf{z}_t \approx 1$, use new candidate.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ATTENTION -->
+    <section class="content-section" id="section-attention">
+      <div class="section-header">
+        <span class="section-tag">08</span>
+        <h2>Attention Mechanism</h2>
+      </div>
+      <div class="card">
+        <h3>Scaled Dot-Product Attention</h3>
+        <div class="two-col">
+          <div>
+            <p>Given queries $\mathbf{Q}$, keys $\mathbf{K}$, values $\mathbf{V}$:</p>
+            <div class="math-block">$$\text{Attention}(\mathbf{Q},\mathbf{K},\mathbf{V}) = \text{softmax}\!\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\right)\mathbf{V}$$</div>
+            <p>Scaling by $\sqrt{d_k}$ prevents dot products from growing large in high dimensions, which would push softmax into regions with tiny gradients.</p>
+            <div class="math-block">$$\text{score}(q,k) = \frac{q \cdot k}{\sqrt{d_k}}$$</div>
+          </div>
+          <div>
+            <h4>Intuition</h4>
+            <p>Each query "looks up" relevant keys. High similarity → high attention weight → more value contribution.</p>
+            <div class="attention-viz" id="attention-viz">
+              <canvas id="attention-canvas" width="280" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-4">
+        <h3>Multi-Head Attention</h3>
+        <div class="math-block">$$\text{head}_i = \text{Attention}(\mathbf{Q}\mathbf{W}_i^Q, \mathbf{K}\mathbf{W}_i^K, \mathbf{V}\mathbf{W}_i^V)$$</div>
+        <div class="math-block">$$\text{MultiHead}(\mathbf{Q},\mathbf{K},\mathbf{V}) = \text{Concat}(\text{head}_1,\ldots,\text{head}_h)\mathbf{W}^O$$</div>
+        <p>Each head attends to different representation subspaces — syntactic, semantic, positional relationships simultaneously. Total params: $4d_\text{model}^2$.</p>
+      </div>
+    </section>
+
+    <!-- TRANSFORMER -->
+    <section class="content-section" id="section-transformer">
+      <div class="section-header">
+        <span class="section-tag">09</span>
+        <h2>Transformer Architecture</h2>
+      </div>
+      <div class="two-col">
+        <div>
+          <div class="card">
+            <h3>Positional Encoding</h3>
+            <p>Inject sequence order (no recurrence):</p>
+            <div class="math-block">$$\text{PE}_{(pos, 2i)} = \sin\!\left(\frac{pos}{10000^{2i/d_\text{model}}}\right)$$</div>
+            <div class="math-block">$$\text{PE}_{(pos, 2i+1)} = \cos\!\left(\frac{pos}{10000^{2i/d_\text{model}}}\right)$$</div>
+          </div>
+          <div class="card mt-4">
+            <h3>Feed-Forward Sub-Layer</h3>
+            <div class="math-block">$$\text{FFN}(\mathbf{x}) = \max(0, \mathbf{x}\mathbf{W}_1+\mathbf{b}_1)\mathbf{W}_2+\mathbf{b}_2$$</div>
+            <p>Applied position-wise. $d_{ff}$ typically $4 \times d_\text{model}$.</p>
+          </div>
+          <div class="card mt-4">
+            <h3>Layer Normalization</h3>
+            <div class="math-block">$$\text{LN}(\mathbf{x}) = \gamma \frac{\mathbf{x}-\mu}{\sqrt{\sigma^2+\epsilon}} + \beta$$</div>
+            <p>Normalizes across feature dim. Enables stable deep training.</p>
+          </div>
+          <div class="card mt-4">
+            <h3>Complexity Comparison</h3>
+            <table class="compare-table">
+              <tr><th>Model</th><th>Per-layer</th><th>Sequential</th></tr>
+              <tr><td>RNN</td><td>$O(nd^2)$</td><td>$O(n)$</td></tr>
+              <tr><td>LSTM</td><td>$O(nd^2)$</td><td>$O(n)$</td></tr>
+              <tr><td>Transformer</td><td>$O(n^2d)$</td><td>$O(1)$</td></tr>
+              <tr><td>Conv (k)</td><td>$O(knd^2)$</td><td>$O(n/k)$</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="transformer-diagram-wrapper">
+          <canvas id="transformer-canvas" width="320" height="600"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- EMBEDDINGS -->
+    <section class="content-section" id="section-embedding">
+      <div class="section-header">
+        <span class="section-tag">10</span>
+        <h2>Embeddings</h2>
+      </div>
+      <div class="card-grid-2">
+        <div class="card">
+          <h3>Word2Vec — Skip-Gram</h3>
+          <p>Predict context from center word. Objective:</p>
+          <div class="math-block">$$\mathcal{L} = -\frac{1}{T}\sum_{t=1}^T\sum_{-c\leq j\leq c, j\neq 0}\log P(w_{t+j}|w_t)$$</div>
+          <div class="math-block">$$P(w_O|w_I) = \frac{\exp(\mathbf{v}_{w_O}^{\prime T}\mathbf{v}_{w_I})}{\sum_{w=1}^W \exp(\mathbf{v}_w^{\prime T}\mathbf{v}_{w_I})}$$</div>
+          <div class="insight-box">✨ Famous: $\text{king} - \text{man} + \text{woman} \approx \text{queen}$</div>
+        </div>
+        <div class="card">
+          <h3>GloVe — Global Vectors</h3>
+          <p>Factorize co-occurrence matrix $X$:</p>
+          <div class="math-block">$$\mathcal{L} = \sum_{i,j=1}^V f(X_{ij})(\mathbf{w}_i^T\tilde{\mathbf{w}}_j + b_i + \tilde{b}_j - \log X_{ij})^2$$</div>
+          <p>Weighting function $f(x) = (x/x_{\max})^\alpha$ if $x < x_{\max}$, else $1$. Combines local (Word2Vec) + global (co-occurrence) statistics.</p>
+        </div>
+        <div class="card">
+          <h3>Token Embeddings in Transformers</h3>
+          <p>Input is a lookup table $\mathbf{E} \in \mathbb{R}^{|V| \times d}$:</p>
+          <div class="math-block">$$\mathbf{x}_t = \mathbf{E}[w_t] + \text{PE}(t)$$</div>
+          <p>Tied embeddings (input = output weight matrix) halve params and improve perplexity. Used in GPT, BERT.</p>
+        </div>
+        <div class="card">
+          <h3>Subword Tokenization (BPE)</h3>
+          <p>Merge most frequent byte pairs iteratively. Vocab size $V$ balances coverage vs. sequence length:</p>
+          <div class="math-block">$$\text{fertility} = \frac{\text{tokens}}{\text{words}} \approx 1.2\text{–}1.5 \text{ for English}$$</div>
+          <div class="code-block"># "unhappiness" → ["un", "happy", "ness"]
+# Unknown words handled gracefully</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOSS FUNCTIONS -->
+    <section class="content-section" id="section-loss">
+      <div class="section-header">
+        <span class="section-tag">11</span>
+        <h2>Loss Functions</h2>
+      </div>
+      <div class="card-grid-2">
+        <div class="card">
+          <h3>Mean Squared Error (MSE)</h3>
+          <div class="math-block">$$\mathcal{L}_{\text{MSE}} = \frac{1}{n}\sum_{i=1}^n(y_i - \hat{y}_i)^2$$</div>
+          <p>Penalizes large errors quadratically. Assumes Gaussian noise. Gradient: $\frac{2}{n}(\hat{y}-y)$.</p>
+          <span class="use-tag">📊 Regression</span>
+        </div>
+        <div class="card">
+          <h3>MAE / L1 Loss</h3>
+          <div class="math-block">$$\mathcal{L}_{\text{MAE}} = \frac{1}{n}\sum_{i=1}^n|y_i - \hat{y}_i|$$</div>
+          <p>Robust to outliers. Non-differentiable at 0 (use subgradient). Assumes Laplace noise.</p>
+          <span class="use-tag">📊 Robust Regression</span>
+        </div>
+        <div class="card">
+          <h3>Huber Loss</h3>
+          <div class="math-block">$$\mathcal{L}_\delta = \begin{cases}\frac{1}{2}(y-\hat{y})^2 & |y-\hat{y}| \leq \delta \\ \delta|y-\hat{y}| - \frac{\delta^2}{2} & \text{otherwise}\end{cases}$$</div>
+          <p>MSE for small errors, MAE for large. Differentiable everywhere. Best of both worlds.</p>
+          <span class="use-tag">📊 Robust Regression</span>
+        </div>
+        <div class="card">
+          <h3>Cross-Entropy (Binary)</h3>
+          <div class="math-block">$$\mathcal{L}_{\text{BCE}} = -\frac{1}{n}\sum_i[y_i\log\hat{p}_i + (1-y_i)\log(1-\hat{p}_i)]$$</div>
+          <p>Maximizes log-likelihood of Bernoulli model. Gradient w.r.t. logit: $\hat{p} - y$ (clean!).</p>
+          <span class="use-tag">🔵 Binary Classification</span>
+        </div>
+        <div class="card">
+          <h3>Categorical Cross-Entropy</h3>
+          <div class="math-block">$$\mathcal{L}_{\text{CE}} = -\sum_{c=1}^C y_c \log\hat{p}_c$$</div>
+          <p>KL divergence from true to predicted distribution: $\mathcal{L} = H(y, \hat{p}) = H(y) + D_{\text{KL}}(y\|\hat{p})$</p>
+          <span class="use-tag">🔵 Multi-class</span>
+        </div>
+        <div class="card">
+          <h3>KL Divergence</h3>
+          <div class="math-block">$$D_{\text{KL}}(P\|Q) = \sum_x P(x)\log\frac{P(x)}{Q(x)}$$</div>
+          <p>Asymmetric: $D_{\text{KL}}(P\|Q) \neq D_{\text{KL}}(Q\|P)$. Used in VAEs, knowledge distillation, RL (PPO).</p>
+          <span class="use-tag">🧮 Distribution Matching</span>
+        </div>
+        <div class="card">
+          <h3>Hinge Loss (SVM)</h3>
+          <div class="math-block">$$\mathcal{L} = \frac{1}{n}\sum_i \max(0, 1 - y_i\hat{y}_i)$$</div>
+          <p>Only misclassified and margin-violating samples contribute. Correct and confident → 0 loss.</p>
+          <span class="use-tag">🔵 SVM / Margin</span>
+        </div>
+        <div class="card">
+          <h3>Focal Loss</h3>
+          <div class="math-block">$$\mathcal{L}_\text{FL} = -\alpha_t(1-p_t)^\gamma \log(p_t)$$</div>
+          <p>Down-weights easy examples via $(1-p_t)^\gamma$. Designed for class imbalance (RetinaNet). $\gamma=2$ is common.</p>
+          <span class="use-tag">🎯 Object Detection</span>
+        </div>
+        <div class="card">
+          <h3>Contrastive / Triplet Loss</h3>
+          <div class="math-block">$$\mathcal{L} = \max(0,\, d(a,p) - d(a,n) + m)$$</div>
+          <p>Anchor $a$, positive $p$, negative $n$. Margin $m$ ensures separation. Used in face recognition, embeddings.</p>
+          <span class="use-tag">🔗 Metric Learning</span>
+        </div>
+        <div class="card">
+          <h3>ELBO (VAE Loss)</h3>
+          <div class="math-block">$$\mathcal{L}_{\text{ELBO}} = \mathbb{E}_{q_\phi}[\log p_\theta(x|z)] - D_{\text{KL}}(q_\phi(z|x)\|p(z))$$</div>
+          <p>Reconstruction term + KL regularization. Tight lower bound on log-likelihood $\log p(x)$.</p>
+          <span class="use-tag">🧮 Generative Models</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- OPTIMIZERS -->
+    <section class="content-section" id="section-optimizers">
+      <div class="section-header">
+        <span class="section-tag">12</span>
+        <h2>Optimizers</h2>
+      </div>
+      <div class="card">
+        <h3>Gradient Descent Family</h3>
+        <div class="optimizer-timeline">
+          <div class="opt-item">
+            <div class="opt-year">SGD</div>
+            <div class="opt-content">
+              <h4>Stochastic Gradient Descent</h4>
+              <div class="math-block">$$\theta_{t+1} = \theta_t - \eta \nabla_\theta \mathcal{L}(\theta_t; x^{(i)}, y^{(i)})$$</div>
+              <p>Noisy but can escape local minima. Converges at $O(1/\sqrt{T})$ for convex.</p>
+            </div>
+          </div>
+          <div class="opt-item">
+            <div class="opt-year">SGD+M</div>
+            <div class="opt-content">
+              <h4>Momentum</h4>
+              <div class="math-block">$$\mathbf{v}_{t+1} = \beta \mathbf{v}_t + (1-\beta)\nabla_\theta\mathcal{L}$$</div>
+              <div class="math-block">$$\theta_{t+1} = \theta_t - \eta \mathbf{v}_{t+1}$$</div>
+              <p>Accumulates velocity. Damps oscillations in shallow dimensions. $\beta=0.9$ standard.</p>
+            </div>
+          </div>
+          <div class="opt-item">
+            <div class="opt-year">AdaGrad</div>
+            <div class="opt-content">
+              <h4>Adaptive Gradient</h4>
+              <div class="math-block">$$G_t = G_{t-1} + g_t^2$$</div>
+              <div class="math-block">$$\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{G_t+\epsilon}}g_t$$</div>
+              <p>Per-parameter learning rates. Rare features get larger updates. LR decays to 0 — problem!</p>
+            </div>
+          </div>
+          <div class="opt-item">
+            <div class="opt-year">RMSProp</div>
+            <div class="opt-content">
+              <h4>Root Mean Square Propagation</h4>
+              <div class="math-block">$$E[g^2]_t = \rho E[g^2]_{t-1} + (1-\rho)g_t^2$$</div>
+              <div class="math-block">$$\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{E[g^2]_t+\epsilon}}g_t$$</div>
+              <p>Fixes AdaGrad's decaying LR with exponential moving average. $\rho=0.9$ typical.</p>
+            </div>
+          </div>
+          <div class="opt-item opt-highlight">
+            <div class="opt-year">Adam</div>
+            <div class="opt-content">
+              <h4>Adam — Adaptive Moment Estimation</h4>
+              <div class="math-block">$$m_t = \beta_1 m_{t-1} + (1-\beta_1)g_t \quad \text{(1st moment)}$$</div>
+              <div class="math-block">$$v_t = \beta_2 v_{t-1} + (1-\beta_2)g_t^2 \quad \text{(2nd moment)}$$</div>
+              <div class="math-block">$$\hat{m}_t = \frac{m_t}{1-\beta_1^t}, \quad \hat{v}_t = \frac{v_t}{1-\beta_2^t} \quad \text{(bias correction)}$$</div>
+              <div class="math-block">$$\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{\hat{v}_t}+\epsilon}\hat{m}_t$$</div>
+              <p>Default: $\beta_1=0.9$, $\beta_2=0.999$, $\epsilon=10^{-8}$, $\eta=10^{-3}$. Most widely used optimizer.</p>
+            </div>
+          </div>
+          <div class="opt-item">
+            <div class="opt-year">AdamW</div>
+            <div class="opt-content">
+              <h4>Adam + Weight Decay (Decoupled)</h4>
+              <div class="math-block">$$\theta_{t+1} = \theta_t - \eta\left(\frac{\hat{m}_t}{\sqrt{\hat{v}_t}+\epsilon} + \lambda\theta_t\right)$$</div>
+              <p>Decouples L2 regularization from gradient scaling. Better generalization than Adam+L2. Default for LLMs (GPT, BERT fine-tuning).</p>
+            </div>
+          </div>
+          <div class="opt-item">
+            <div class="opt-year">Nadam</div>
+            <div class="opt-content">
+              <h4>Nesterov + Adam</h4>
+              <div class="math-block">$$\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{\hat{v}_t}+\epsilon}\left(\beta_1\hat{m}_t + \frac{(1-\beta_1)g_t}{1-\beta_1^t}\right)$$</div>
+              <p>Look-ahead gradient (Nesterov) + adaptive rates (Adam). Often converges slightly faster.</p>
+            </div>
+          </div>
+          <div class="opt-item">
+            <div class="opt-year">Lion</div>
+            <div class="opt-content">
+              <h4>EvoLved Sign Momentum (2023)</h4>
+              <div class="math-block">$$\theta_{t+1} = \theta_t - \eta(\text{sign}(\beta_1 m_{t-1} + (1-\beta_1)g_t) + \lambda\theta_t)$$</div>
+              <p>Uses sign of gradient. Memory-efficient (1 state vs Adam's 2). Competitive with AdamW on large models.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-4">
+        <h3>Learning Rate Schedules</h3>
+        <div class="card-grid-3">
+          <div>
+            <h4>Cosine Annealing</h4>
+            <div class="math-block">$$\eta_t = \eta_{\min} + \frac{1}{2}(\eta_{\max}-\eta_{\min})\left(1+\cos\frac{t\pi}{T}\right)$$</div>
+          </div>
+          <div>
+            <h4>Linear Warmup</h4>
+            <div class="math-block">$$\eta_t = \eta_{\max}\cdot\frac{t}{t_{\text{warmup}}} \quad (t \leq t_w)$$</div>
+          </div>
+          <div>
+            <h4>Transformer Schedule</h4>
+            <div class="math-block">$$\eta = d_\text{model}^{-0.5}\cdot\min(t^{-0.5},\, t\cdot t_w^{-1.5})$$</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGULARIZATION -->
+    <section class="content-section" id="section-regularization">
+      <div class="section-header">
+        <span class="section-tag">13</span>
+        <h2>Regularization Techniques</h2>
+      </div>
+      <div class="card-grid-2">
+        <div class="card">
+          <h3>L2 Regularization (Weight Decay)</h3>
+          <div class="math-block">$$\mathcal{L}_{\text{reg}} = \mathcal{L} + \frac{\lambda}{2}\|\mathbf{w}\|_2^2$$</div>
+          <p>Gradient adds $\lambda\mathbf{w}$ — pulls weights toward 0. Equivalent to Gaussian prior $p(\mathbf{w}) = \mathcal{N}(0, 1/\lambda)$. Shrinks all weights proportionally.</p>
+        </div>
+        <div class="card">
+          <h3>L1 Regularization (Lasso)</h3>
+          <div class="math-block">$$\mathcal{L}_{\text{reg}} = \mathcal{L} + \lambda\|\mathbf{w}\|_1$$</div>
+          <p>Induces sparsity — some weights exactly 0. Feature selection. Equivalent to Laplace prior. Gradient: $\lambda\,\text{sign}(\mathbf{w})$.</p>
+        </div>
+        <div class="card">
+          <h3>Dropout</h3>
+          <div class="math-block">$$\mathbf{h}_{\text{drop}} = \mathbf{h} \odot \mathbf{m}, \quad m_i \sim \text{Bernoulli}(p)$$</div>
+          <p>Scale at inference: $\hat{\mathbf{h}} = p\mathbf{h}$. Equivalent to training $2^n$ subnetworks. Acts as ensemble. Reduces co-adaptation.</p>
+          <div class="insight-box">⚠️ Don't use dropout before LayerNorm (Transformers use it after).</div>
+        </div>
+        <div class="card">
+          <h3>Batch Normalization</h3>
+          <div class="math-block">$$\mu_\mathcal{B} = \frac{1}{m}\sum_{i=1}^m x_i, \quad \sigma^2_\mathcal{B} = \frac{1}{m}\sum_{i=1}^m(x_i-\mu_\mathcal{B})^2$$</div>
+          <div class="math-block">$$\hat{x}_i = \frac{x_i - \mu_\mathcal{B}}{\sqrt{\sigma^2_\mathcal{B}+\epsilon}}, \quad y_i = \gamma\hat{x}_i + \beta$$</div>
+          <p>Normalizes per-batch, per-feature. Enables higher LR, reduces sensitivity to initialization.</p>
+        </div>
+        <div class="card">
+          <h3>Data Augmentation</h3>
+          <p>Implicitly increases training set. For images:</p>
+          <div class="math-block">$$\tilde{x} = T(x), \quad T \sim \{$$crop, flip, rotate, color-jitter$\}$$</div>
+          <p>Mixup: $\tilde{x} = \lambda x_i + (1-\lambda)x_j$, $\tilde{y} = \lambda y_i + (1-\lambda)y_j$</p>
+        </div>
+        <div class="card">
+          <h3>Early Stopping</h3>
+          <p>Monitor validation loss. Stop when it stops decreasing for $k$ epochs (patience).</p>
+          <div class="math-block">$$\text{stop if } \mathcal{L}_{\text{val}}(t) > \min_{t' < t} \mathcal{L}_{\text{val}}(t') \text{ for } k \text{ epochs}$$</div>
+          <p>Equivalent to L2 regularization in linear models. Free — no additional compute cost.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BACKPROPAGATION -->
+    <section class="content-section" id="section-backprop">
+      <div class="section-header">
+        <span class="section-tag">14</span>
+        <h2>Backpropagation</h2>
+      </div>
+      <div class="card">
+        <h3>Chain Rule — The Core Idea</h3>
+        <div class="two-col">
+          <div>
+            <p>For composite $\mathcal{L} = f(g(\mathbf{w}))$:</p>
+            <div class="math-block">$$\frac{\partial \mathcal{L}}{\partial \mathbf{w}} = \frac{\partial \mathcal{L}}{\partial g} \cdot \frac{\partial g}{\partial \mathbf{w}}$$</div>
+            <p>For a layer $l$ with pre-activations $\mathbf{z}^{(l)}$:</p>
+            <div class="math-block">$$\boldsymbol{\delta}^{(l)} = \frac{\partial \mathcal{L}}{\partial \mathbf{z}^{(l)}} = \left(\mathbf{W}^{(l+1)T}\boldsymbol{\delta}^{(l+1)}\right) \odot \phi'(\mathbf{z}^{(l)})$$</div>
+            <div class="math-block">$$\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{(l)}} = \boldsymbol{\delta}^{(l)}\mathbf{a}^{(l-1)T}$$</div>
+            <div class="math-block">$$\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{(l)}} = \boldsymbol{\delta}^{(l)}$$</div>
+          </div>
+          <div>
+            <h4>Computational Graph Perspective</h4>
+            <p>Forward pass: compute and cache all intermediate values.</p>
+            <p>Backward pass: traverse graph in reverse, accumulate gradients via chain rule.</p>
+            <div class="insight-box">🔑 Key insight: share computation via dynamic programming. $O(n)$ ops for $n$-parameter gradient, same as one forward pass.</div>
+            <div class="code-block"># PyTorch autograd
+loss.backward()  # ← backprop
+optimizer.step() # ← update
+optimizer.zero_grad() # ← reset</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CNN -->
+    <section class="content-section" id="section-cnn">
+      <div class="section-header">
+        <span class="section-tag">15</span>
+        <h2>Convolutional Neural Networks</h2>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <h3>Convolution Operation</h3>
+          <div class="math-block">$$(I * K)[i,j] = \sum_m\sum_n I[i+m, j+n]\cdot K[m,n]$$</div>
+          <p>Output size: $\lfloor\frac{W-F+2P}{S}\rfloor + 1$</p>
+          <p>where $W$=input, $F$=filter, $P$=padding, $S$=stride.</p>
+          <p>Parameters per filter: $F \times F \times C_{\text{in}}$. Total: $\times C_{\text{out}} + C_{\text{out}}$ (bias).</p>
+          <h4>Receptive Field</h4>
+          <div class="math-block">$$r_l = r_{l-1} + (k_l - 1)\prod_{i=1}^{l-1}s_i$$</div>
+        </div>
+        <div class="card">
+          <h3>Pooling & Depth</h3>
+          <p><strong>Max Pooling:</strong> $y = \max_{(i,j) \in R} x_{ij}$ — translation invariance</p>
+          <p><strong>Avg Pooling:</strong> $y = \frac{1}{|R|}\sum_{(i,j)\in R} x_{ij}$</p>
+          <p><strong>Global Avg Pooling:</strong> Collapses spatial dims → classification.</p>
+          <h4>Key Architectures</h4>
+          <table class="compare-table">
+            <tr><th>Model</th><th>Year</th><th>Key Innovation</th></tr>
+            <tr><td>AlexNet</td><td>2012</td><td>ReLU, Dropout, GPU</td></tr>
+            <tr><td>VGG</td><td>2014</td><td>Deep 3×3 filters</td></tr>
+            <tr><td>ResNet</td><td>2015</td><td>Skip connections</td></tr>
+            <tr><td>EfficientNet</td><td>2019</td><td>Compound scaling</td></tr>
+            <tr><td>ConvNeXt</td><td>2022</td><td>Modernized CNN</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="card mt-4">
+        <h3>ResNet Skip Connection</h3>
+        <div class="math-block">$$\mathbf{y} = \mathcal{F}(\mathbf{x}, \{W_i\}) + \mathbf{x}$$</div>
+        <p>Gradient flows directly: $\frac{\partial \mathcal{L}}{\partial \mathbf{x}} = \frac{\partial \mathcal{L}}{\partial \mathbf{y}}\left(1 + \frac{\partial \mathcal{F}}{\partial \mathbf{x}}\right)$. The $+1$ prevents vanishing gradient, enabling 1000+ layer networks.</p>
+      </div>
+    </section>
+
+    <!-- GAN -->
+    <section class="content-section" id="section-gan">
+      <div class="section-header">
+        <span class="section-tag">16</span>
+        <h2>Generative Adversarial Networks</h2>
+      </div>
+      <div class="card">
+        <h3>Minimax Game</h3>
+        <div class="two-col">
+          <div>
+            <div class="math-block">$$\min_G \max_D \, V(D,G) = \mathbb{E}_{x\sim p_\text{data}}[\log D(x)] + \mathbb{E}_{z\sim p_z}[\log(1-D(G(z)))]$$</div>
+            <p><strong>Discriminator:</strong> maximize log-prob of real vs fake</p>
+            <p><strong>Generator:</strong> minimize log-prob of being caught (or maximize $\log D(G(z))$ — non-saturating)</p>
+            <div class="insight-box">🎯 Optimal: $D^*(x) = \frac{p_\text{data}(x)}{p_\text{data}(x)+p_g(x)}$. At equilibrium: $p_g = p_\text{data}$, $D^* = 1/2$ everywhere.</div>
+          </div>
+          <div>
+            <h4>Variants</h4>
+            <table class="compare-table">
+              <tr><th>Model</th><th>Key Idea</th></tr>
+              <tr><td>WGAN</td><td>Wasserstein distance, Lipschitz constraint</td></tr>
+              <tr><td>cGAN</td><td>Conditional on class label $y$</td></tr>
+              <tr><td>CycleGAN</td><td>Unpaired image translation</td></tr>
+              <tr><td>StyleGAN</td><td>Style-based generator, disentanglement</td></tr>
+            </table>
+            <h4>WGAN Loss</h4>
+            <div class="math-block">$$\mathcal{L} = \mathbb{E}[D(x_\text{real})] - \mathbb{E}[D(G(z))]$$</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VAE -->
+    <section class="content-section" id="section-vae">
+      <div class="section-header">
+        <span class="section-tag">17</span>
+        <h2>Variational Autoencoders</h2>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <h3>Encoder + Decoder</h3>
+          <p>Encoder: $q_\phi(z|x)$ — posterior approximation</p>
+          <p>Decoder: $p_\theta(x|z)$ — likelihood</p>
+          <p>Prior: $p(z) = \mathcal{N}(0, I)$</p>
+          <h4>ELBO Objective</h4>
+          <div class="math-block">$$\mathcal{L} = \underbrace{\mathbb{E}_{q_\phi}[\log p_\theta(x|z)]}_{\text{reconstruction}} - \underbrace{D_\text{KL}(q_\phi(z|x)\|p(z))}_{\text{regularization}}$$</div>
+          <p>KL term forces latent to match prior (smooth, continuous latent space).</p>
+        </div>
+        <div class="card">
+          <h3>Reparameterization Trick</h3>
+          <p>Cannot backprop through sampling. Instead:</p>
+          <div class="math-block">$$z = \mu_\phi(x) + \sigma_\phi(x) \odot \epsilon, \quad \epsilon \sim \mathcal{N}(0, I)$$</div>
+          <p>Moves randomness outside gradient path. Gradient flows through $\mu$, $\sigma$.</p>
+          <h4>KL for Gaussian</h4>
+          <div class="math-block">$$D_\text{KL} = -\frac{1}{2}\sum_j\left(1 + \log\sigma_j^2 - \mu_j^2 - \sigma_j^2\right)$$</div>
+          <p>Analytical! No Monte Carlo needed for this term.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RL -->
+    <section class="content-section" id="section-rl">
+      <div class="section-header">
+        <span class="section-tag">18</span>
+        <h2>Reinforcement Learning</h2>
+      </div>
+      <div class="card-grid-2">
+        <div class="card">
+          <h3>Bellman Equation</h3>
+          <div class="math-block">$$V^\pi(s) = \mathbb{E}_\pi\left[r_t + \gamma V^\pi(s_{t+1}) \mid s_t=s\right]$$</div>
+          <div class="math-block">$$Q^\pi(s,a) = r + \gamma\mathbb{E}_{s'}[V^\pi(s')]$$</div>
+          <p>Value function satisfies recursive self-consistency. Optimal: $Q^*(s,a) = r + \gamma\max_{a'}Q^*(s',a')$</p>
+        </div>
+        <div class="card">
+          <h3>Policy Gradient (REINFORCE)</h3>
+          <div class="math-block">$$\nabla_\theta J(\theta) = \mathbb{E}_\pi\left[\nabla_\theta\log\pi_\theta(a|s) \cdot G_t\right]$$</div>
+          <p>$G_t = \sum_{k=0}^\infty \gamma^k r_{t+k}$ (return). High variance — use baseline $b(s)$:</p>
+          <div class="math-block">$$\nabla_\theta J = \mathbb{E}[\nabla_\theta\log\pi_\theta(a|s)(G_t - b(s))]$$</div>
+        </div>
+        <div class="card">
+          <h3>PPO (Proximal Policy Optimization)</h3>
+          <div class="math-block">$$\mathcal{L}^\text{CLIP} = \mathbb{E}\left[\min\!\left(r_t(\theta)\hat{A}_t,\, \text{clip}(r_t,1\!-\!\epsilon,1\!+\!\epsilon)\hat{A}_t\right)\right]$$</div>
+          <p>$r_t(\theta) = \pi_\theta(a|s)/\pi_{\theta_\text{old}}(a|s)$. Clips policy update to prevent large steps. RLHF for LLMs uses PPO.</p>
+        </div>
+        <div class="card">
+          <h3>DQN Key Ideas</h3>
+          <div class="math-block">$$\mathcal{L} = \mathbb{E}\left[(r + \gamma\max_{a'}Q(s',a';\theta^-) - Q(s,a;\theta))^2\right]$$</div>
+          <p><strong>Experience Replay:</strong> $\mathcal{D} = \{(s,a,r,s')\}$ — breaks correlations</p>
+          <p><strong>Target Network:</strong> $\theta^-$ updated every $C$ steps — stabilizes training</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERVIEW -->
+    <section class="content-section" id="section-interview">
+      <div class="section-header">
+        <span class="section-tag">19</span>
+        <h2>Interview Questions & Answers</h2>
+      </div>
+      <div class="interview-container" id="interview-container">
+        <!-- populated by JS -->
+      </div>
+    </section>
+
+    <!-- SYSTEM DESIGN -->
+    <section class="content-section" id="section-sysdesign">
+      <div class="section-header">
+        <span class="section-tag">20</span>
+        <h2>ML System Design</h2>
+      </div>
+      <div class="card">
+        <h3>Framework: ORCAS</h3>
+        <div class="sysdesign-steps">
+          <div class="step"><span class="step-num">O</span><div><strong>Objective</strong><p>Define the ML problem. What metric matters? Business KPI → proxy metric. E.g., "maximize watch time" → CTR + completion rate.</p></div></div>
+          <div class="step"><span class="step-num">R</span><div><strong>Requirements</strong><p>Latency (p99), throughput (QPS), accuracy threshold, freshness, training frequency, data constraints, budget.</p></div></div>
+          <div class="step"><span class="step-num">C</span><div><strong>Collection</strong><p>Data sources, labeling strategy (human/weak supervision/self-supervised), class imbalance handling, feature store.</p></div></div>
+          <div class="step"><span class="step-num">A</span><div><strong>Architecture</strong><p>Model choice: start simple (logistic reg → tree → DNN). Feature engineering, embedding strategy, serving architecture.</p></div></div>
+          <div class="step"><span class="step-num">S</span><div><strong>Serving & Scaling</strong><p>Online vs batch inference, model compression (quantization, distillation, pruning), A/B testing, monitoring.</p></div></div>
+        </div>
+      </div>
+
+      <div class="card-grid-2 mt-4">
+        <div class="card">
+          <h3>Recommendation System</h3>
+          <div class="sysdesign-mini">
+            <div class="mini-stage">🔍 Retrieval (ANN)</div>
+            <div class="mini-arrow">→</div>
+            <div class="mini-stage">⚡ Ranking (DNN)</div>
+            <div class="mini-arrow">→</div>
+            <div class="mini-stage">📋 Re-ranking</div>
+          </div>
+          <p><strong>Two-tower model:</strong></p>
+          <div class="math-block">$$\text{score}(u,i) = \mathbf{e}_u \cdot \mathbf{e}_i$$</div>
+          <p>User tower + Item tower trained with in-batch negatives. Serve via FAISS/ScaNN for ANN retrieval.</p>
+        </div>
+        <div class="card">
+          <h3>Search Ranking</h3>
+          <div class="math-block">$$\text{score} = f_\theta(\text{query}, \text{doc}, \text{context})$$</div>
+          <p><strong>Learning-to-Rank:</strong> Pointwise (regression), Pairwise (RankNet: $P_{ij} = \sigma(s_i - s_j)$), Listwise (LambdaRank).</p>
+          <p><strong>Features:</strong> BM25, semantic similarity, CTR, freshness, authority.</p>
+        </div>
+        <div class="card">
+          <h3>Real-Time Fraud Detection</h3>
+          <p><strong>Constraints:</strong> &lt;50ms latency, high precision (false positive = customer friction).</p>
+          <p><strong>Architecture:</strong> Feature store → gradient boosted trees (fast inference) + async DNN for enrichment.</p>
+          <p><strong>Challenge:</strong> Concept drift — retrain daily on recent data + monitor PSI.</p>
+          <div class="math-block">$$\text{PSI} = \sum\left(P_i - Q_i\right)\ln\frac{P_i}{Q_i}$$</div>
+        </div>
+        <div class="card">
+          <h3>Model Compression</h3>
+          <p><strong>Quantization:</strong> FP32 → INT8. $4\times$ smaller, $2-4\times$ faster. PTQ vs QAT.</p>
+          <p><strong>Pruning:</strong> Remove weights with $|w| < \epsilon$. Structured (whole neurons) vs unstructured.</p>
+          <p><strong>Distillation:</strong> Student learns soft targets from teacher:</p>
+          <div class="math-block">$$\mathcal{L} = \alpha\mathcal{L}_\text{CE}(y, p_s) + (1-\alpha)\mathcal{L}_\text{KL}(p_t, p_s)$$</div>
+          <p><strong>LoRA:</strong> $\Delta W = BA$, where $B \in \mathbb{R}^{d\times r}$, $A \in \mathbb{R}^{r\times k}$, $r \ll \min(d,k)$.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <span class="logo-text-sm">ML Encyclopedia</span>
+        <p>Mathematical ML reference for practitioners & researchers.</p>
+        <p class="footer-note">Equations render via MathJax · Diagrams drawn in Canvas</p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/diagrams.js"></script>
+  <script src="js/interview.js"></script>
+</body>
+</html>
