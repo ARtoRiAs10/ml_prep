@@ -7,16 +7,22 @@
   <link rel="stylesheet" href="css/main.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Fraunces:ital,wght@0,300;0,600;0,900;1,300;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
   <script>
     window.MathJax = {
       tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] },
       options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
     };
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
 </head>
 <body>
   <div class="grain"></div>
+
+  <!-- PROGRESS BAR -->
+  <div id="progress-bar"></div>
+
+  <!-- BACK TO TOP -->
+  <button id="back-to-top" title="Back to top">↑</button>
 
   <!-- SIDEBAR NAV -->
   <nav class="sidebar" id="sidebar">
@@ -24,6 +30,11 @@
       <span class="logo-bracket">{</span>
       <span class="logo-text">ML<br/>ENC.</span>
       <span class="logo-bracket">}</span>
+      <button id="theme-toggle" class="theme-toggle" title="Switch to Light Mode">☀️</button>
+    </div>
+    <div class="sidebar-search-wrap">
+      <span class="search-icon">⌕</span>
+      <input id="sidebar-search" class="sidebar-search" type="text" placeholder="Search topics…" autocomplete="off"/>
     </div>
     <div class="nav-section-label">FOUNDATIONS</div>
     <a href="#section-types" class="nav-link" data-section="types">ML Types</a>
@@ -56,6 +67,12 @@
     <div class="nav-section-label">INTERVIEW PREP</div>
     <a href="#section-interview" class="nav-link" data-section="interview">Interview Q&A</a>
     <a href="#section-sysdesign" class="nav-link" data-section="sysdesign">ML System Design</a>
+
+    <div class="nav-section-label">REFERENCE</div>
+    <a href="#section-glossary" class="nav-link" data-section="glossary">Glossary</a>
+    <a href="#section-cheatsheet" class="nav-link" data-section="cheatsheet">Cheat Sheet</a>
+    <a href="#section-complexity" class="nav-link" data-section="complexity">Complexity Guide</a>
+    <a href="#section-init" class="nav-link" data-section="init">Weight Init</a>
   </nav>
 
   <!-- HAMBURGER -->
@@ -945,11 +962,131 @@ optimizer.zero_grad() # ← reset</div>
       </div>
     </section>
 
+    <!-- GLOSSARY -->
+    <section class="content-section" id="section-glossary">
+      <div class="section-header">
+        <span class="section-tag">21</span>
+        <h2>Glossary of Key Terms</h2>
+      </div>
+      <div id="glossary-container"><!-- populated by cheatsheet.js --></div>
+    </section>
+
+    <!-- CHEAT SHEET -->
+    <section class="content-section" id="section-cheatsheet">
+      <div class="section-header">
+        <span class="section-tag">22</span>
+        <h2>Quick-Reference Cheat Sheet</h2>
+      </div>
+      <div id="cheatsheet-container"><!-- populated by cheatsheet.js --></div>
+    </section>
+
+    <!-- COMPLEXITY GUIDE -->
+    <section class="content-section" id="section-complexity">
+      <div class="section-header">
+        <span class="section-tag">23</span>
+        <h2>Complexity & Scaling Guide</h2>
+      </div>
+      <div class="card">
+        <h3>Time & Space Complexity Comparison</h3>
+        <table class="compare-table">
+          <tr>
+            <th>Architecture</th><th>Train Time / Step</th><th>Inference</th>
+            <th>Memory (params)</th><th>Sequence Ops</th>
+          </tr>
+          <tr><td>Linear / Logistic</td><td>$O(nd)$</td><td>$O(d)$</td><td>$O(d)$</td><td>—</td></tr>
+          <tr><td>MLP (L layers)</td><td>$O(nd^2L)$</td><td>$O(d^2L)$</td><td>$O(d^2L)$</td><td>—</td></tr>
+          <tr><td>CNN (k×k filter)</td><td>$O(nk^2d^2L)$</td><td>$O(k^2d^2L)$</td><td>$O(k^2d^2L)$</td><td>$O(n/k)$</td></tr>
+          <tr><td>RNN</td><td>$O(nd_h^2)$</td><td>$O(d_h^2)$</td><td>$O(d_h^2)$</td><td>$O(n)$</td></tr>
+          <tr><td>LSTM</td><td>$O(4nd_h^2)$</td><td>$O(4d_h^2)$</td><td>$O(4d_h(d_h+d_x))$</td><td>$O(n)$</td></tr>
+          <tr><td>Transformer</td><td>$O(n^2d)$</td><td>$O(n^2d)$</td><td>$O(4d^2)$ per layer</td><td>$O(1)$</td></tr>
+          <tr><td>Linear Attn.</td><td>$O(nd^2)$</td><td>$O(d^2)$</td><td>$O(4d^2)$ per layer</td><td>$O(1)$</td></tr>
+        </table>
+      </div>
+      <div class="card-grid-2 mt-4">
+        <div class="card">
+          <h3>Scaling Laws (Chinchilla)</h3>
+          <p>Optimal token count for a model of $N$ parameters:</p>
+          <div class="math-block">$$D_{\text{opt}} \approx 20 \cdot N$$</div>
+          <p>Loss as a function of compute $C = 6ND$:</p>
+          <div class="math-block">$$L(C) = \left(\frac{C_{\min}}{C}\right)^{\alpha_C} + L_\infty$$</div>
+          <p>$\alpha_C \approx 0.057$. Both model size and data scale equally — compute-optimal training is the Chinchilla regime. GPT-3 (175B, 300B tokens) was severely undertrained.</p>
+        </div>
+        <div class="card">
+          <h3>GPU Memory Estimation</h3>
+          <p>For a model with $N$ parameters, full training memory:</p>
+          <div class="math-block">$$M_{\text{total}} \approx 16N \text{ bytes}$$</div>
+          <p>Breakdown (mixed precision + Adam):</p>
+          <div class="math-block">$$M = \underbrace{2N}_{\text{fp16 params}} + \underbrace{2N}_{\text{gradients}} + \underbrace{12N}_{\text{Adam states (fp32)}}$$</div>
+          <p>e.g., 7B model ≈ 112 GB → needs 2× A100 80GB minimum. Activation checkpointing trades compute for memory: $O(\sqrt{L})$ vs $O(L)$.</p>
+          <div class="code-block">params = 7e9
+bytes_per_param = 16  # full training
+gpu_mem_gb = params * bytes_per_param / 1e9
+# = 112 GB</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WEIGHT INITIALIZATION -->
+    <section class="content-section" id="section-init">
+      <div class="section-header">
+        <span class="section-tag">24</span>
+        <h2>Weight Initialization</h2>
+      </div>
+      <div class="card">
+        <h3>Why Initialization Matters</h3>
+        <p>Bad initialization → vanishing or exploding activations/gradients from layer 1. Consider $L$ layers with weights $W^{(l)} \in \mathbb{R}^{n \times n}$. Variance of activations:</p>
+        <div class="math-block">$$\text{Var}(a^{(l)}) = \left(n \cdot \text{Var}(w)\right)^l \cdot \text{Var}(x)$$</div>
+        <p>This blows up if $n\,\text{Var}(w) > 1$ and vanishes if $< 1$. Initialization schemes choose $\text{Var}(w)$ to keep variance $\approx 1$ through all layers.</p>
+      </div>
+      <div class="card-grid-2 mt-4">
+        <div class="card card-accent-blue">
+          <h3>Xavier / Glorot (2010)</h3>
+          <p>Designed for <strong>tanh / sigmoid</strong> activations. Balances forward and backward signal:</p>
+          <div class="math-block">$$W \sim \mathcal{U}\!\left[-\frac{\sqrt{6}}{\sqrt{n_{\text{in}}+n_{\text{out}}}},\; \frac{\sqrt{6}}{\sqrt{n_{\text{in}}+n_{\text{out}}}}\right]$$</div>
+          <p>Or equivalently: $\text{Var}(W) = \dfrac{2}{n_{\text{in}}+n_{\text{out}}}$</p>
+          <p>Derivation: choose variance so that $\text{Var}(y_i) = \text{Var}(x_i)$ through both forward and backward pass simultaneously.</p>
+          <div class="code-block">nn.init.xavier_uniform_(layer.weight)
+nn.init.xavier_normal_(layer.weight)</div>
+        </div>
+        <div class="card card-accent-green">
+          <h3>He / Kaiming (2015)</h3>
+          <p>Designed for <strong>ReLU / Leaky ReLU</strong>. Accounts for ReLU zeroing half the neurons (halves effective fan-in):</p>
+          <div class="math-block">$$W \sim \mathcal{N}\!\left(0,\; \frac{2}{n_{\text{in}}}\right)$$</div>
+          <p>For Leaky ReLU with slope $a$:</p>
+          <div class="math-block">$$\text{Var}(W) = \frac{2}{(1+a^2)\,n_{\text{in}}}$$</div>
+          <p>Default in PyTorch for Conv and Linear layers. Always prefer over Xavier when using ReLU variants.</p>
+          <div class="code-block">nn.init.kaiming_normal_(layer.weight,
+  mode='fan_in',
+  nonlinearity='relu')</div>
+        </div>
+        <div class="card card-accent-purple">
+          <h3>Orthogonal Init</h3>
+          <p>Initialize weight matrix as a random orthogonal matrix $W^TW = I$:</p>
+          <div class="math-block">$$W = UV^T, \quad \text{where } M = U\Sigma V^T \text{ (SVD of random matrix)}$$</div>
+          <p>Preserves gradient norms exactly at initialization. Especially useful for RNNs (prevents vanishing/exploding in recurrent weights). Also used in deep linear networks research.</p>
+          <div class="code-block">nn.init.orthogonal_(layer.weight,
+  gain=1.0)</div>
+        </div>
+        <div class="card card-accent-orange">
+          <h3>Practical Initialization Rules</h3>
+          <table class="compare-table">
+            <tr><th>Activation</th><th>Use</th><th>Gain</th></tr>
+            <tr><td>Linear / tanh</td><td>Xavier Normal</td><td>$5/3$</td></tr>
+            <tr><td>Sigmoid</td><td>Xavier Normal</td><td>$1$</td></tr>
+            <tr><td>ReLU</td><td>He / Kaiming</td><td>$\sqrt{2}$</td></tr>
+            <tr><td>Leaky ReLU</td><td>He Kaiming</td><td>$\sqrt{2/(1+a^2)}$</td></tr>
+            <tr><td>SELU</td><td>LeCun Normal</td><td>$1$</td></tr>
+          </table>
+          <div class="insight-box">💡 Biases: always init to 0. BatchNorm γ=1, β=0. Embedding: $\mathcal{N}(0, d^{-0.5})$. Final classifier: $\mathcal{N}(0, 0.01)$ for stable softmax at start.</div>
+        </div>
+      </div>
+    </section>
+
     <footer class="footer">
       <div class="footer-content">
         <span class="logo-text-sm">ML Encyclopedia</span>
-        <p>Mathematical ML reference for practitioners & researchers.</p>
-        <p class="footer-note">Equations render via MathJax · Diagrams drawn in Canvas</p>
+        <p>Mathematical ML reference for practitioners &amp; researchers.</p>
+        <p class="footer-note">Equations render via MathJax · Diagrams drawn in Canvas · v2.0</p>
       </div>
     </footer>
   </main>
@@ -957,5 +1094,6 @@ optimizer.zero_grad() # ← reset</div>
   <script src="js/main.js"></script>
   <script src="js/diagrams.js"></script>
   <script src="js/interview.js"></script>
+  <script src="js/cheatsheet.js"></script>
 </body>
 </html>

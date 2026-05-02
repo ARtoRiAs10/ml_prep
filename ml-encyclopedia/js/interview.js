@@ -22,7 +22,7 @@ const questions = [
     q: "What is the vanishing gradient problem and how is it solved?",
     tag: "fundamentals",
     a: `<p>In deep networks, gradients are products of Jacobian matrices through many layers:</p>
-    <div class="math-block">$$\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}^{(1)}} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{a}^{(L)}} \\prod_{l=2}^{L} \\frac{\\partial \\mathbf{a}^{(l)}}\\partial \\mathbf{a}^{(l-1)}}$$</div>
+    <div class="math-block">$$\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{W}^{(1)}} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{a}^{(L)}} \\prod_{l=2}^{L} \\frac{\\partial \\mathbf{a}^{(l)}}{\\partial \\mathbf{a}^{(l-1)}}$$</div>
     <p>If $|\\partial a^{(l)}/\\partial a^{(l-1)}| < 1$, gradients shrink exponentially. Sigmoid saturates to 0 gradient for large inputs.</p>
     <p><strong>Solutions:</strong> (1) Use ReLU/GELU instead of sigmoid/tanh. (2) Residual connections (ResNet) — additive shortcut. (3) Batch/Layer Normalization — keeps activations in good range. (4) LSTM/GRU for sequences — cell state avoids repeated multiplication. (5) Careful initialization (He, Xavier).</p>`
   },
@@ -277,7 +277,10 @@ const questions = [
 ];
 
 // ===== RENDER Q&A =====
+let currentFilter = 'all';
+
 function renderQA(filter = 'all') {
+  currentFilter = filter;
   const container = document.getElementById('interview-container');
   if (!container) return;
 
@@ -289,9 +292,10 @@ function renderQA(filter = 'all') {
         <button class="filter-btn ${f === filter ? 'active' : ''}" data-filter="${f}">${f.charAt(0).toUpperCase()+f.slice(1)}</button>
       `).join('')}
     </div>
+    <div class="qa-count">${filtered.length} question${filtered.length !== 1 ? 's' : ''}</div>
     ${filtered.map((q, i) => `
-      <div class="qa-item" id="qa-${i}">
-        <div class="qa-question" onclick="toggleQA('qa-${i}')">
+      <div class="qa-item" id="qa-${filter}-${i}">
+        <div class="qa-question" onclick="toggleQA('qa-${filter}-${i}')">
           <div class="qa-q-text">${q.q}</div>
           <span class="qa-tag qa-tag-${q.tag}">${q.tag}</span>
           <svg class="qa-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -307,13 +311,13 @@ function renderQA(filter = 'all') {
 
   // Bind filters
   container.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      renderQA(btn.dataset.filter);
-      if (window.MathJax) {
-        setTimeout(() => MathJax.typesetPromise(), 200);
-      }
-    });
+    btn.addEventListener('click', () => renderQA(btn.dataset.filter));
   });
+
+  // Typeset any math already visible on page
+  if (window.MathJax) {
+    MathJax.typesetPromise([container]);
+  }
 }
 
 function toggleQA(id) {
@@ -328,9 +332,11 @@ function toggleQA(id) {
   } else {
     item.classList.add('open');
     answer.style.maxHeight = answer.scrollHeight + 'px';
-    // Re-typeset math in opened answer
+    // Re-typeset math then recalculate height (MathJax changes DOM height)
     if (window.MathJax) {
-      setTimeout(() => MathJax.typesetPromise([answer]), 100);
+      MathJax.typesetPromise([answer]).then(() => {
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      });
     }
   }
 }
